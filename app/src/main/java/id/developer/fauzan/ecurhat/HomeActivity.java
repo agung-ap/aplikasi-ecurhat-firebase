@@ -36,6 +36,7 @@ public class HomeActivity extends AppCompatActivity implements PostingAdapter.Da
     private PostingAdapter postingAdapter;
 
     private ArrayList<Posting> postingArrayList;
+    private Boolean isAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,8 @@ public class HomeActivity extends AppCompatActivity implements PostingAdapter.Da
                 }
             }
         };
+        //is admin check
+        isAdmin = getIntent().getBooleanExtra("isAdmin" , true);
 
         emptyMessage = (TextView)findViewById(R.id.empty_message_user);
         recyclerView = (RecyclerView)findViewById(R.id.timeline);
@@ -104,28 +107,16 @@ public class HomeActivity extends AppCompatActivity implements PostingAdapter.Da
         });
     }
 
+
+
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String status = dataSnapshot.child(Constant.USERS_TABLE)
-                        .child(auth.getUid())
-                        .child("status").getValue(String.class);
+        if (isAdmin){
+            getMenuInflater().inflate(R.menu.menu_admin, menu);
+        }else {
+            getMenuInflater().inflate(R.menu.menu_user, menu);
+        }
 
-                if (status.equals("admin")){
-                    getMenuInflater().inflate(R.menu.menu_admin, menu);
-                }else {
-                    getMenuInflater().inflate(R.menu.menu_user, menu);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -133,6 +124,7 @@ public class HomeActivity extends AppCompatActivity implements PostingAdapter.Da
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.profil:
+                startActivity(new Intent(getApplicationContext(), ProfilActivity.class));
                 return true;
             case R.id.posting:
                 startActivity(new Intent(getApplicationContext(), PostingActivity.class));
@@ -172,6 +164,5 @@ public class HomeActivity extends AppCompatActivity implements PostingAdapter.Da
         intent.putExtras(bundle);
         startActivity(intent);
 
-        //Toast.makeText(this, "Position " + dataPosition, Toast.LENGTH_SHORT).show();
     }
 }

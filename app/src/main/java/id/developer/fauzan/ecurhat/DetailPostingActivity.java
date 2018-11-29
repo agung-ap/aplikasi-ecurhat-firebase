@@ -29,6 +29,7 @@ import id.developer.fauzan.ecurhat.adapter.CommentAdapter;
 import id.developer.fauzan.ecurhat.adapter.PostingAdapter;
 import id.developer.fauzan.ecurhat.model.Comment;
 import id.developer.fauzan.ecurhat.model.Posting;
+import id.developer.fauzan.ecurhat.model.UsersImage;
 import id.developer.fauzan.ecurhat.util.Constant;
 
 public class DetailPostingActivity extends AppCompatActivity {
@@ -54,6 +55,7 @@ public class DetailPostingActivity extends AppCompatActivity {
 
     private ArrayList<Posting> getPostingList;
     private ArrayList<Comment> commentArrayList;
+    private String imageUrl;
 
     private CommentAdapter commentAdapter;
     @Override
@@ -76,6 +78,7 @@ public class DetailPostingActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Dari : "+getPostingList.get(0).getDari());
         //show magang detail
         showPosting();
+        getImageProfil();
         Log.i(TAG, "dari " + getPostingList.get(0).getDari());
 
         emptyMessage = (TextView)findViewById(R.id.empty_comment);
@@ -103,6 +106,7 @@ public class DetailPostingActivity extends AppCompatActivity {
         String inputComment = commentForm.getText().toString().trim();
         Comment comment = new Comment();
         comment.setComment(inputComment);
+        comment.setImageUrl(imageUrl);
 
         return comment;
     }
@@ -162,6 +166,24 @@ public class DetailPostingActivity extends AppCompatActivity {
         pesan.setText("Pesan : " + getPostingList.get(0).getPesan());
     }
 
+    private void getImageProfil(){
+        databaseReference = FirebaseDatabase.getInstance()
+                .getReference(Constant.USERS_PHOTO_TABLE);
+        databaseReference.child(auth.getUid())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        UsersImage usersImage = dataSnapshot.getValue(UsersImage.class);
+                        imageUrl = usersImage.getImageUrl();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -172,21 +194,4 @@ public class DetailPostingActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //commentAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //commentAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        //commentAdapter.notifyDataSetChanged();
-    }
 }

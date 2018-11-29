@@ -17,7 +17,6 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.developer.fauzan.ecurhat.R;
 import id.developer.fauzan.ecurhat.model.Comment;
-import id.developer.fauzan.ecurhat.model.Posting;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
     private Context context;

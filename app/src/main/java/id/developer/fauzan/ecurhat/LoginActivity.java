@@ -108,20 +108,25 @@ public class LoginActivity extends AppCompatActivity {
                                         progressDialog.dismiss();
                                         Toast.makeText(LoginActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
 
-                                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                        Intent intent = new Intent(new Intent(getApplicationContext(), HomeActivity.class));
+                                        intent.putExtra("isAdmin", true);
+                                        startActivity(intent);
                                         finish();
                                     }else {
                                         progressDialog.dismiss();
                                         Toast.makeText(LoginActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
 
-                                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                        Intent intent = new Intent(new Intent(getApplicationContext(), HomeActivity.class));
+                                        intent.putExtra("isAdmin", false);
+                                        startActivity(intent);
                                         finish();
                                     }
                                 }
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                                    progressDialog.dismiss();
+                                    Toast.makeText(LoginActivity.this, "Login Gagal", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }

@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import id.developer.fauzan.ecurhat.model.Users;
+import id.developer.fauzan.ecurhat.util.Constant;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,10 +60,15 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Users user = dataSnapshot.getValue(Users.class);
 
-                if (user.getStatus().equals("admin")){
-                    startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                if (user.getStatus().equals(Constant.ROLE_ADMIN)){
+                    Intent intent = new Intent(new Intent(MainActivity.this, HomeActivity.class));
+                    intent.putExtra("isAdmin", true);
+                    startActivity(intent);
                     finish();
-                }else if (user.getStatus().equals("user")){
+                }else if (user.getStatus().equals(Constant.ROLE_USER)){
+                    Intent intent = new Intent(new Intent(MainActivity.this, HomeActivity.class));
+                    intent.putExtra("isAdmin", false);
+                    startActivity(intent);
                     startActivity(new Intent(MainActivity.this, HomeActivity.class));
                     finish();
                 }

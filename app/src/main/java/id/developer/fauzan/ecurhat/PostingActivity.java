@@ -111,14 +111,7 @@ public class PostingActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            /*Comment comment = new Comment();
-                            comment.setComment(Constant.NONE);
-                            comment.setImageUrl(Constant.NONE);
-
-                            for (int i = 0; i < userId.size(); i++) {
-                                setComment(databaseReference.push().getKey(),
-                                        comment);
-                            }*/
+                            Toast.makeText(PostingActivity.this, "pesan telah di posting", Toast.LENGTH_SHORT).show();
 
                         } else {
 
@@ -126,24 +119,6 @@ public class PostingActivity extends AppCompatActivity {
                     }
                 });
 
-    }
-
-    private void setComment(String postingId, Comment comment){
-        databaseReference = FirebaseDatabase.getInstance()
-                .getReference(Constant.COMMENT);
-        databaseReference.child(postingId)
-                .setValue(comment)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
-                            Toast.makeText(PostingActivity.this, "Pesan Telah Di Posting", Toast.LENGTH_SHORT).show();
-                            finish();
-                        }else {
-
-                        }
-                    }
-                });
     }
 
     @Override
