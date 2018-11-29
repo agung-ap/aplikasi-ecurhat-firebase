@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Belajar FIrebase</string>
+    <string name="GET_SELECTED_ITEM">selected item</string>
+</resources>
