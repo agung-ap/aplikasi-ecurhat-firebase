@@ -126,7 +126,9 @@ public class RegisterActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
 
                             Log.i(TAG, "Register is Success");
-                            startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                            Intent intent = new Intent(new Intent(getApplicationContext(), HomeActivity.class));
+                            intent.putExtra("isAdmin", false);
+                            startActivity(intent);
                             finish();
                         }else {
                             progressDialog.dismiss();

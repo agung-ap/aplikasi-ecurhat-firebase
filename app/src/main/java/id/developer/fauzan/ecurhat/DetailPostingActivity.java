@@ -97,7 +97,9 @@ public class DetailPostingActivity extends AppCompatActivity {
         sendComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                commentForm.setText("");
                 setComment(data());
+
             }
         });
     }
@@ -121,7 +123,7 @@ public class DetailPostingActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        commentForm.setText("");
+
                     }
                 });
     }

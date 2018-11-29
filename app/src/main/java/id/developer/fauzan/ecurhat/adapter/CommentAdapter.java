@@ -38,6 +38,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         viewHolder.comment.setText(commentList.get(i).getComment());
         Picasso.get().load(commentList.get(i).getImageUrl())
                 .placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_background)
                 .into(viewHolder.profilImage);
     }
 
